@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://8gm0wk7y5i2s"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_b2xkr"]
+[ext_resource type="PackedScene" uid="uid://dpwobaqhu1vxl" path="res://scenes/snake_segment.tscn" id="2_sqfoo"]
+[ext_resource type="PackedScene" uid="uid://qie004nuq00t" path="res://scenes/hud.tscn" id="3_7y0lu"]
+[ext_resource type="Texture2D" uid="uid://du5m5glcwctyr" path="res://assets/mouse.png" id="5_jj25x"]
+[ext_resource type="PackedScene" uid="uid://byymg5tw6dia" path="res://scenes/game_over_menu.tscn" id="6_yqsmi"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_b2xkr")
+snake_scene = ExtResource("2_sqfoo")
+
+[node name="Background" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(499.5, 550)
+scale = Vector2(1.665, 2.5)
+
+[node name="Hud" parent="." instance=ExtResource("3_7y0lu")]
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="Food" type="Sprite2D" parent="."]
+texture = ExtResource("5_jj25x")
+offset = Vector2(25, 25)
+
+[node name="GameOverMenu" parent="." instance=ExtResource("6_yqsmi")]
+process_mode = 2
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]
+[connection signal="restart" from="GameOverMenu" to="." method="_on_game_over_menu_restart"]
